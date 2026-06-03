@@ -8,6 +8,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  double _moneyValue = 0;
+  int maxValue = 100000;
+  final moneyController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,7 +51,33 @@ class _HomePageState extends State<HomePage> {
                         style: TextStyle(
                           fontSize: 18
                         ),
-                      )
+                      ),
+                      Slider(
+                        value: _moneyValue,
+                        max: maxValue.toDouble(),
+                        onChanged: (double value) {
+                          setState(() {
+                            _moneyValue = value;
+                            moneyController.text = value.round().toString();
+                          });
+                        }
+                      ),
+                      TextField(
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: "Enter money"
+                        ),
+                        controller: moneyController,
+                        onChanged: (value) {
+                          if (int.tryParse(value)! <= maxValue) {
+                            setState(() {
+                              _moneyValue = double.tryParse(value)?? 0;
+                            });
+                          } else {
+                            
+                          }
+                        },
+                      ),
                     ],
                   ),
                 ),
