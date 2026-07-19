@@ -10,16 +10,19 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   double _moneyValue = 0;
   int maxValue = 100000;
+  double usdValue = 0;
+  String text = "Poor boy, enter the money";
   final moneyController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Currency-conv"),
+        title: const Text("Not your wallet"),
         backgroundColor: Colors.amber,
       ),
       body: Column(
         children: [
+          SizedBox(height: 100,),
           Container(
             margin: EdgeInsets.all(10),
             child: 
@@ -28,8 +31,9 @@ class _HomePageState extends State<HomePage> {
               children: [
                 Container( 
                   height: 300,
-                  width: 500,
+                  width: 420,
                   decoration: BoxDecoration(
+                    color: Colors.amber[50],
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(
                       color: Colors.black,
@@ -38,8 +42,9 @@ class _HomePageState extends State<HomePage> {
                   ),
                   child: Column(
                     children: [
+                      SizedBox(height: 10,),
                       Text(
-                        "Currency 1",
+                        "IND - Rs ₹ ",
                         textAlign: TextAlign.right,
                         style: TextStyle(
                           fontSize: 24
@@ -47,12 +52,14 @@ class _HomePageState extends State<HomePage> {
                       ),
                       SizedBox(height: 20,),
                       Text(
-                        "Select",
+                        "Select from slider or Enter money",
                         style: TextStyle(
-                          fontSize: 18
+                          fontSize: 16
                         ),
                       ),
-                      Slider(
+                      SizedBox(
+                        width: 300,
+                        child: Slider(
                         value: _moneyValue,
                         max: maxValue.toDouble(),
                         onChanged: (double value) {
@@ -62,21 +69,30 @@ class _HomePageState extends State<HomePage> {
                           });
                         }
                       ),
-                      TextField(
+                      ),
+                      SizedBox(
+                        width: 300,
+                        child: TextField(
                         decoration: InputDecoration(
                           border: OutlineInputBorder(),
                           hintText: "Enter money"
                         ),
                         controller: moneyController,
                         onChanged: (value) {
+                          if (value.endsWith(".")) {
+                            value = value.replaceFirst(".", ' ');
+                          }
+                          final amount = int.tryParse(value);
+
+                        if (amount != null && amount <= maxValue) {
                           if (int.tryParse(value)! <= maxValue) {
                             setState(() {
                               _moneyValue = double.tryParse(value)?? 0;
                             });
-                          } else {
-                            
-                          }
+                          } 
+                        }
                         },
+                      ),
                       ),
                     ],
                   ),
@@ -84,7 +100,16 @@ class _HomePageState extends State<HomePage> {
                 SizedBox(width: 40,),
                 ElevatedButton(  
                 onPressed: () {
+                  setState(() {
+                    if (_moneyValue <= 95000) {
+                      usdValue = _moneyValue / 96.32;
+                      text = "You have \$${usdValue.toStringAsPrecision(3)} worth of money";
+                    } else {
+                      text = "That's actually huge sum of money bro!!";
+                    }
+                  });
                   
+
                 }, 
                 child: Icon(
                   Icons.currency_exchange
@@ -92,8 +117,9 @@ class _HomePageState extends State<HomePage> {
                 SizedBox(width: 40,),
                 Container(
                   height: 300,
-                  width: 500,
+                  width: 420,
                   decoration: BoxDecoration(
+                    color: Colors.amber[50],
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(
                       color: Colors.black,
@@ -102,26 +128,118 @@ class _HomePageState extends State<HomePage> {
                   ),
                   child: Column(
                     children: [
+                      SizedBox(height: 10,),
                       Text(
-                        "Currency 2",
+                        "USD - \$",
                         style: TextStyle(
                           fontSize: 24
                         ),
                       ),
-                      SizedBox(height: 20,),
+                      SizedBox(height: 10,),
                       Text(
-                        "Select",
+                        "Data taken from Real-life",
+                        style: TextStyle(
+                          fontSize: 16
+                        ),),
+                        SizedBox(height: 10,),
+                      Text(
+                        text,
                         style: TextStyle(
                           fontSize: 18
-                        ),)
+                        ),),
+                      SizedBox(height: 10,),
+                      Text("Items you could gift me with these money:", style: TextStyle(fontSize: 16, decoration: TextDecoration.underline),),
+
+                      SizedBox(height: 10,),
+                      Row( 
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                width: 190,
+                                padding: EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                  color: Colors.amberAccent,
+                                  border: Border.all(),
+                                  borderRadius: BorderRadius.circular(5)
+                                ),
+                                child: Center(child: Text("${(usdValue/1.2).toInt()} - candies (cost: \$1.2)")),
+                              ),
+                              SizedBox(height: 5,),
+                              Container(
+                                width: 190,
+                                padding: EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                  color: Colors.amberAccent,
+                                  border: Border.all(),
+                                  borderRadius: BorderRadius.circular(5)
+                                ),
+                                child: Center(child: Text("${(usdValue/5).toInt()} - Latte (cost: \$5)")),
+                              ),
+                              SizedBox(height: 5,),
+                              Container(
+                                width: 190,
+                                padding: EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                  color: Colors.amberAccent,
+                                  border: Border.all(),
+                                  borderRadius: BorderRadius.circular(5)
+                                ),
+                                child: Center(child: Text("${(usdValue/1000).toInt()} - iPhone 16 (cost: \$1000)")),
+                              )
+                              
+                            ],
+                          ),
+                          SizedBox(width: 10,),
+                          Column(
+                            children: [
+                              Container(
+                                width: 190,
+                                padding: EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                  color: Colors.amberAccent,
+                                  border: Border.all(),
+                                  borderRadius: BorderRadius.circular(5)
+                                ),
+                                child: Center(child: Text("${(usdValue/12).toInt()} - pizzas (cost: \$12)")),
+                              ),
+                              SizedBox(height: 5,),
+                              Container(
+                                width: 190,
+                                padding: EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                  color: Colors.amberAccent,
+                                  border: Border.all(),
+                                  borderRadius: BorderRadius.circular(5)
+                                ),
+                                child: Center(child: Text("${(usdValue/350).toInt()} - Nothing 3a (cost: \$350)")),
+                              ),
+                              SizedBox(height: 5,),
+                              Container(
+                                width: 190,
+                                padding: EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                  color: Colors.amberAccent,
+                                  border: Border.all(),
+                                  borderRadius: BorderRadius.circular(5)
+                                ),
+                                child: Center(child: Text("${(usdValue/1000).toInt()} - Macbook (cost: \$1,000)")),
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+                      
                     ],
                   )
                 ),
               ],
             ),
           ),
-          SizedBox(height: 50,),
-          Text("Hello hello")
+          SizedBox(height: 140,),
+          Text("Source: Trust me bro")
         ],
       )
     );

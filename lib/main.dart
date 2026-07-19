@@ -12,7 +12,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Currency Converter",
-      home: HomePage()
+      home: HomePage(),
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.amber
+        ),
+        useMaterial3: true
+      ),
     );
   }
 }
