@@ -44,7 +44,7 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       SizedBox(height: 10,),
                       Text(
-                        "IND - Rs ₹ ",
+                        "INR - Rs ₹ ",
                         textAlign: TextAlign.right,
                         style: TextStyle(
                           fontSize: 24
