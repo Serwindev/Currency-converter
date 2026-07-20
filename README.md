@@ -68,19 +68,19 @@ There are two methods to try this one.
 
 - Clone the repo
 
-``` ```
+```git clone https://github.com/Serwindev/Currency-converter.git ```
 
 - Move into the project
 
-``` ```
+``` cd Currency-converter```
 
 - Install dependencies
 
-``` ```
+``` flutter pub get```
 
 - Run it
 
-``` ```
+``` flutter run```
 
 ---
 
